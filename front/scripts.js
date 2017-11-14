@@ -3,20 +3,28 @@ const standard = 'The result will appear here';
 let result = '';
 
 // dom objects
-let resultEl = document.getElementById('result');
+const resultEl = document.getElementById('result');
+const loginEl = document.getElementById('login');
+const loginErrEl = document.getElementById('loginError');
 
-// reset localstorage on load
-storage.auth = JSON.stringify({});
+// reset page
+storage.auth = '';
+resultEl.innerHTML = 'Please login to retrieve documents';
 
 function fetchDocument (index) {
 	// xhr request
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == XMLHttpRequest.DONE) {
-			result = xhr.responseText;
-			showResult(result);
+			if (xhr.status == 200) {
+				result = xhr.responseText;
+				showResult(result);
+			} else {
+				
+			}
 		}
 	};
+	if (!storage.auth) return;
 	if (index && parseInt(index) >= 0) {
 		xhr.open('GET', `http://localhost:3000/documents/${index}`, true);
 		xhr.setRequestHeader('Authorization', storage.auth);
@@ -31,6 +39,8 @@ function showResult(text) {
 }
 
 function highlightWord() {
+	if (!result || !storage.auth) return;
+	
 	let word = document.getElementById('word').value;
 	let rgx = new RegExp(`\\b${word}\\b`, 'g'); // match only whole words
 
@@ -46,10 +56,13 @@ function login() {
 	let xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == XMLHttpRequest.DONE) {
-			let token = xhr.response.token;
-			console.log('token', token);
-			storage.auth = 'Bearer ' + token;
-			console.log(storage);
+			if (xhr.status == 200) {
+				let token = xhr.response.token;
+				storage.auth = 'Bearer ' + token;
+				loginEl.innerHTML = 'Welcome ' + username;
+			} else {
+				loginErrEl.innerHTML = 'Wrong credentials, please try again!';
+			}
 		}
 	};
 
@@ -65,5 +78,3 @@ function login() {
 		console.log('no credentials');
 	}
 }
-
-fetchDocument();

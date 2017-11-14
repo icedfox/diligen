@@ -39,6 +39,11 @@ button, select {
 	padding: 5px 30px;
 }
 
+#loginError {
+	color: red;
+    font-size: 80%;
+}
+
 .highlight {
 	background-color: #a1a3f5;
 }
