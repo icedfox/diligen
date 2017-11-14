@@ -20,9 +20,7 @@ const localStrategy = new LocalStrategy({
 	usernameField: 'username',
 	passwordField: 'password'
 }, (username, password, done) => {
-	console.log('here', username, password, user);
 	if (username === user.username && password === user.password) {
-		console.log('here1');
 		return done(null, user);
 	} else {
 		return done('Wrong credentials', false);
