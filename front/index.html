@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>The HTML5 Herald</title>
+	<meta name="description" content="The HTML5 Herald">
+	<meta name="author" content="SitePoint">
+
+	<link rel="stylesheet" href="styles.css">
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body>
+		<div class="main">
+			<div>
+				<h3>Diligen challenge</h3>
+				Document number:
+				<select class="rounded blue" onchange="fetchDocument(this.value)">
+					<option value="">Select a document</option>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+				</select>
+			</div>
+			<hr>
+			<div id="result"></div>
+			<hr>
+			<div>
+				Word highlight: <input type="text" name="document" id="word">
+				<button class="rounded blue" onclick="highlightWord()">Highlight!</button>
+			</div>
+		</div>
+
+	<script src="scripts.js"></script>
+</body>
+</html>
